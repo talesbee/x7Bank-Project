@@ -1,14 +1,12 @@
-# **expo-typescript-template**
+# **X7 Bank - Projeto Teste**
 
-Template for react native projects using expo with typescript.
+Projeto criado para atender o teste passado pela X7 Bank.
 
-### **This template comes with**
+### **O projeto Contem:**
 
-- [x] Context Api
-- [x] Themes light and dark using styled components
-- [x] Localization with separeted files for each language
-- [x] Default root navigation set to stack
-- [x] Loading component
-- [x] Models for handling images and the default theme type
-- [x] Default font settings
-- [x] Api default url with axios
+- [x] Consumo de API
+- [x] Persistência de dados - JSON
+- [x] Edição dos dados armazenados internamente
+- [x] Listagem dos dados armazenados, edição de filtro e ordem de listagem
+- [x] Fixação de dados na tela
+
