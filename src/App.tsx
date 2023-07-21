@@ -21,6 +21,7 @@ const App: React.FC = () => {
 
   const [loaded] = useFonts({
     RobotoMono: require("./fonts/RobotoMono.ttf"),
+    Calistoga: require("./fonts/Calistoga-Regular.ttf")
   });
 
   if (!loaded) return <Loading />;
