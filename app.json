@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "X7 Bank - Projeto Teste",
-    "slug": "Projeto Teste",
+    "slug": "X7_Bank_Projeto_Teste",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./src/assets/icon.png",
@@ -23,10 +23,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.talesb.X7_Bank_Projeto_Teste"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "a1b419f5-da5d-482d-b06f-1cc0b1202ec9"
+      }
     }
   }
 }
