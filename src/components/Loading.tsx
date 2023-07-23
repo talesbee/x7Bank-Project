@@ -1,5 +1,5 @@
 import React from "react";
-import { View, ActivityIndicator } from "react-native";
+import { View, ActivityIndicator, Image } from "react-native";
 
 import useUi from "../contexts/ui/useUi";
 
