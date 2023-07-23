@@ -38,7 +38,6 @@ const Index: React.FC = () => {
     }, [name, birthDay]);
 
     const newPeople = async () => {
-        console.log("New!");
         let validing = true;
         if ((birthDay !== "" && birthDay !== undefined) && (name !== "" && name !== undefined)) { //Validação simples, apenas se os campos não estão vazio
             let listPeople: ItemData[] = [];
@@ -48,13 +47,14 @@ const Index: React.FC = () => {
                 Nome: name,
                 DataNascimento: birthDay
             }
+            console.log(newPeopleItem);
             if (PeopleMemory !== null) {
                 listPeople = JSON.parse(PeopleMemory);
             } else {
                 newPeopleItem.ID = 0;
             }
 
-            listPeople.find((a) => a.Nome === newPeopleItem.Nome ? validing = false : listPeople.push(newPeopleItem));
+            listPeople.push(newPeopleItem);
 
             if (validing) {
                 const jsonValue = JSON.stringify(listPeople);

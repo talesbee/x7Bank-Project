@@ -50,10 +50,8 @@ const Index: React.FC = () => {
 
       //Busca na memoria a lista de pessoas
       const PeopleMemory = await AsyncStorage.getItem('Pessoas');
-      //const PeopleMemory = null;
 
       if (PeopleMemory !== null) {//Caso exista a lista, usa ela
-
         listPeople = JSON.parse(PeopleMemory);
         isMemory = true;
 
@@ -63,60 +61,61 @@ const Index: React.FC = () => {
         });
       }
 
-      let listPeopleFiltered: ItemData[] = [];
+      if (listPeople.length !== 0) {
+        let listPeopleFiltered: ItemData[] = [];
 
-      //Removendo Duplicados
-      listPeople.forEach((item) => {
-        var duplicated = listPeopleFiltered.findIndex(redItem => {
-          return item.Nome == redItem.Nome;
-        }) > -1;
+        //Removendo Duplicados
+        listPeople.forEach((item) => {
+          var duplicated = listPeopleFiltered.findIndex(redItem => {
+            return item.Nome == redItem.Nome;
+          }) > -1;
 
-        if (!duplicated) {
-          item.ID = listPeopleFiltered.length;
-          listPeopleFiltered.push(item);
-        }
-      });
+          if (!duplicated) {
+            item.ID = listPeopleFiltered.length;
+            listPeopleFiltered.push(item);
+          }
+        });
 
-      //Colocando em ordem por data de nascimento
-      listPeopleFiltered.sort(function (a: ItemData, b: ItemData) {
-        let data1 = a.DataNascimento;
-        let data2 = b.DataNascimento;
-        if (isMemory) {
-          data1 = a.DataNascimento.split('/')[2] + "-" + a.DataNascimento.split('/')[1] + "-" + a.DataNascimento.split('/')[0];
-          data2 = b.DataNascimento.split('/')[2] + "-" + b.DataNascimento.split('/')[1] + "-" + b.DataNascimento.split('/')[0];
-        }
-        return (
-          new Date(data1).getTime()) - (new Date(data2).getTime())
-      });
+        //Colocando em ordem por data de nascimento
+        listPeopleFiltered.sort(function (a: ItemData, b: ItemData) {
+          let data1 = a.DataNascimento;
+          let data2 = b.DataNascimento;
+          if (isMemory) {
+            data1 = a.DataNascimento.split('/')[2] + "-" + a.DataNascimento.split('/')[1] + "-" + a.DataNascimento.split('/')[0];
+            data2 = b.DataNascimento.split('/')[2] + "-" + b.DataNascimento.split('/')[1] + "-" + b.DataNascimento.split('/')[0];
+          }
+          return (
+            new Date(data1).getTime()) - (new Date(data2).getTime())
+        });
 
 
-      //Localiza João e Maria
-      let listaJoaoMaria: ItemData[] = [];
-      listPeopleFiltered.find((item) => {
-        item.Nome.includes("João") || item.Nome.includes("Maria") ? listaJoaoMaria.push(item) : null;
-      });
+        //Localiza João e Maria
+        let listaJoaoMaria: ItemData[] = [];
+        listPeopleFiltered.find((item) => {
+          item.Nome.includes("João") || item.Nome.includes("Maria") ? listaJoaoMaria.push(item) : null;
+        });
 
-      //Retirando João e Maria da Lista antiga
-      listaJoaoMaria.forEach((a) => listPeopleFiltered.find((b, index) => b.ID === a.ID ? listPeopleFiltered.splice(index, 1) : null));
+        //Retirando João e Maria da Lista antiga
+        listaJoaoMaria.forEach((a) => listPeopleFiltered.find((b, index) => b.ID === a.ID ? listPeopleFiltered.splice(index, 1) : null));
 
-      //Adicionando no topo da lista os João e Maria
-      listPeopleFiltered.unshift(...listaJoaoMaria);
+        //Adicionando no topo da lista os João e Maria
+        listPeopleFiltered.unshift(...listaJoaoMaria);
 
-      //Formata a data de nascimento para padrão BR (DD/MM/AAAA) e atualiza o ID da lista para ficar na ordem
-      listPeopleFiltered.forEach((item, index) => {
-        const dataFormatada = item.DataNascimento.split('-');
-        item.ID = index;
-        if (!isMemory) {
-          item.DataNascimento = dataFormatada[2] + "/" + dataFormatada[1] + "/" + dataFormatada[0];
-        }
-      });
+        //Formata a data de nascimento para padrão BR (DD/MM/AAAA) e atualiza o ID da lista para ficar na ordem
+        listPeopleFiltered.forEach((item, index) => {
+          const dataFormatada = item.DataNascimento.split('-');
+          item.ID = index;
+          if (!isMemory) {
+            item.DataNascimento = dataFormatada[2] + "/" + dataFormatada[1] + "/" + dataFormatada[0];
+          }
+        });
 
-      //Salvando na Memoria
-      const jsonValue = JSON.stringify(listPeopleFiltered);
-      await AsyncStorage.setItem('Pessoas', jsonValue);
+        //Salvando na Memoria
+        const jsonValue = JSON.stringify(listPeopleFiltered);
+        await AsyncStorage.setItem('Pessoas', jsonValue);
 
-      listPeople = listPeopleFiltered;
-
+        listPeople = listPeopleFiltered;
+      }
 
       setData(listPeople);
 
